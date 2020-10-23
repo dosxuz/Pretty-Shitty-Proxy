@@ -54,14 +54,17 @@ func connString(conn net.Conn, data []byte) {
 	} else {
 		addr = tt
 		port = 80
+		fmt.Println("HERE")
 	}
 	ipAddr, err := net.LookupIP(string(addr))
-	fmt.Println("IP Addres is :", ipAddr[0].String())
-	if err != nil {
-		fmt.Println(err)
-	}
 
-	proxyThisCunt(ipAddr[0].String(), port, data, conn)
+	if err == nil {
+		fmt.Println("IP Addres is :", ipAddr[0].String())
+		proxyThisCunt(ipAddr[0].String(), port, data, conn)
+	} else {
+		fmt.Println(err)
+		conn.Close()
+	}
 }
 
 func proxyThisCunt(ip string, port int, data []byte, browserConn net.Conn) {
