@@ -5,14 +5,30 @@ import (
 	"net"
 	"strconv"
 	"strings"
+
+	"github.com/tkanos/gonfig"
 )
 
+type Configuration struct {
+	Port      int
+	Interface string
+}
+
 func main() {
-	ln, err := net.Listen("tcp", ":1331")
+	configuration := Configuration{}
+	err := gonfig.GetConf("config.json", &configuration)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("[*] Server started at port 1331")
+	port := configuration.Port
+	iface := configuration.Interface
+	listenToThisShit := iface + ":" + strconv.Itoa(port)
+	ln, err := net.Listen("tcp", listenToThisShit)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Server started listening on ", listenToThisShit)
+	//	fmt.Println("[*] Server started at port 1331")
 	defer ln.Close()
 
 	for {

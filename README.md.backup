@@ -18,14 +18,7 @@ go get github.com/tkanos/gonfig
 
 The config file looks as follows : 
 
-```
-{
-	"Port" : 1331,
-	"Interface" : "localhost"
-}
-```
 
-The Port number and interface can be changed according to your own use. By default it is set to listen on localhost at port 1331.
 ## Usage 
 
 ```
